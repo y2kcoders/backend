@@ -8,16 +8,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-import com.nighthawk.spring_portfolio.mvc.skatepark.Skatepark;
-
 @RestController
 @RequestMapping("/api/skatepark")
 public class SkateparkController {
     @Autowired
-    private SkateparkRepository repository;
+    private SkateparkJPA repository;
 
     @GetMapping("/")
-    public ResponseEntity<List<Skatepark> > getSkateparks() {
+    public ResponseEntity<List<Skatepark>> getSkateparks() {
         return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
     }
 
@@ -28,7 +26,7 @@ public class SkateparkController {
     }
 
     @PostMapping("/like/{id}")
-    public ResponseEntity<Skatepark> updateLikes(@PathVariable long id, @RequestParam int likeValue) {
+    public ResponseEntity<Skatepark> updateLikes(@PathVariable Long id, @RequestParam int likeValue) {
         Optional<Skatepark> optional = repository.findById(id);
         if (optional.isPresent()) {
             Skatepark skatepark = optional.get();
@@ -42,13 +40,11 @@ public class SkateparkController {
 
     @DeleteMapping("/delete/{name}")
     public ResponseEntity<Void> deleteSkatepark(@PathVariable String name) {
-        Optional<Skatepark> optional = repository.findBySkateparkName(name);
-        if (optional.isPresent()) {
-            Skatepark skatepark = optional.get();
-            repository.delete(skatepark);
+        List<Skatepark> skateparks = repository.findBySkateparkName(name);
+        if (!skateparks.isEmpty()) {
+            repository.deleteAll(skateparks);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
-

@@ -13,6 +13,9 @@ import com.nighthawk.spring_portfolio.mvc.note.NoteJpaRepository;
 import com.nighthawk.spring_portfolio.mvc.person.Person;
 import com.nighthawk.spring_portfolio.mvc.person.PersonDetailsService;
 
+import com.nighthawk.spring_portfolio.mvc.skatepark.Skatepark;
+import com.nighthawk.spring_portfolio.mvc.skatepark.SkateparkJPA;
+
 import java.util.List;
 
 @Component
@@ -21,6 +24,8 @@ public class ModelInit {
     @Autowired JokesJpaRepository jokesRepo;
     @Autowired NoteJpaRepository noteRepo;
     @Autowired PersonDetailsService personService;
+    @Autowired SkateparkJPA skateparkRepo; // Inject the SkateparkRepository
+
 
     @Bean
     CommandLineRunner run() {  // The run() method will be executed after the application starts
@@ -48,7 +53,21 @@ public class ModelInit {
                     noteRepo.save(n);  // JPA Save                  
                 }
             }
-
+            String[] skateparkArray = Skatepark.init(); // You'll need to define the init() method in your Skatepark class
+            for (String skateparkName : skateparkArray) {
+                List<Skatepark> skateparkFound = skateparkRepo.findBySkateparkName(skateparkName);
+                if (skateparkFound.size() == 0) {
+                    Skatepark skatepark = new Skatepark();
+                    skatepark.setSkateparkName(skateparkName);
+                    skatepark.setAuthor("Author"); // Set author and other details as needed
+                    skatepark.setTitle("Title");
+                    skatepark.setAddress("Address");
+                    skatepark.setStarRating(4); // Set the star rating as needed
+                    skatepark.setDescription("Description");
+                    skatepark.setTotalLikes(0); // Initialize likes to 0
+                    skateparkRepo.save(skatepark);
+                }
+            }
         };
     }
 }

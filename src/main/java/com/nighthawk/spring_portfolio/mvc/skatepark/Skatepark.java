@@ -2,16 +2,12 @@ package com.nighthawk.spring_portfolio.mvc.skatepark;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import com.nighthawk.spring_portfolio.mvc.skatepark.Skatepark;
-
-@Data  // Annotations to simplify writing code (ie constructors, setters)
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-@Entity // Annotation to simplify creating an entity, which is a lightweight persistence domain object. Typically, an entity represents a table in a relational database, and each entity instance corresponds to a row in that table.
+@Entity
 public class Skatepark {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,18 +18,22 @@ public class Skatepark {
     private String author;
     private String title;
     private String address;
-    private double starRating; // Change to an appropriate data type
+    private double starRating;
     private String description;
-    private Long totalLikes;    // Change to an appropriate data type
+    private int totalLikes;
 
-    public Skatepark(String skateparkName, String author, String title, String address, double starRating, String description) {
+    public Skatepark() {
+        // Default constructor
+    }
+
+    public Skatepark(String skateparkName, String author, String title, String address, double starRating, String description, int totalLikes) {
         this.skateparkName = skateparkName;
         this.author = author;
         this.title = title;
         this.address = address;
         this.starRating = starRating;
         this.description = description;
-        this.totalLikes = 0L; // Initialize likes to 0
+        this.totalLikes = totalLikes;
     }
 
     // Getters and Setters
@@ -73,7 +73,7 @@ public class Skatepark {
         this.address = address;
     }
 
-    public int getStarRating() {
+    public double getStarRating() {
         return starRating;
     }
 
@@ -95,5 +95,16 @@ public class Skatepark {
 
     public void setTotalLikes(int totalLikes) {
         this.totalLikes = totalLikes;
+    }
+
+    public static String[] init() {
+        final String[] skateparkArray = {
+            "Skatepark 1",
+            "Skatepark 2",
+            "Skatepark 3",
+            "Skatepark 4",
+            "Skatepark 5",
+        };
+        return skateparkArray;
     }
 }
