@@ -25,26 +25,28 @@ public class SkateparkController {
         return new ResponseEntity<>(savedSkatepark, HttpStatus.CREATED);
     }
 
-    @PostMapping("/like/{id}")
-    public ResponseEntity<Skatepark> updateLikes(@PathVariable Long id, @RequestParam int likeValue) {
-        Optional<Skatepark> optional = repository.findById(id);
-        if (optional.isPresent()) {
-            Skatepark skatepark = optional.get();
+    @PutMapping("/like/{name}")
+    public ResponseEntity<Skatepark> updateLikes(@PathVariable String name, @RequestBody int likeValue) {
+        List<Skatepark> skateparks = repository.findBySkateparkName(name);
+        if (!skateparks.isEmpty()) {
+            Skatepark skatepark = skateparks.get(0); // Assuming you want to work with the first matching skatepark
             int currentLikes = skatepark.getTotalLikes();
             skatepark.setTotalLikes(currentLikes + likeValue);
+            // You can also update the author who liked the skatepark
             repository.save(skatepark);
             return new ResponseEntity<>(skatepark, HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/delete/{name}")
     public ResponseEntity<Void> deleteSkatepark(@PathVariable String name) {
         List<Skatepark> skateparks = repository.findBySkateparkName(name);
         if (!skateparks.isEmpty()) {
-            repository.deleteAll(skateparks);
+            repository.delete(skateparks.get(0)); // Assuming you want to delete the first matching skatepark
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
 }

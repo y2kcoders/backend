@@ -53,18 +53,10 @@ public class ModelInit {
                     noteRepo.save(n);  // JPA Save                  
                 }
             }
-            String[] skateparkArray = Skatepark.init(); // You'll need to define the init() method in your Skatepark class
-            for (String skateparkName : skateparkArray) {
-                List<Skatepark> skateparkFound = skateparkRepo.findBySkateparkName(skateparkName);
-                if (skateparkFound.size() == 0) {
-                    Skatepark skatepark = new Skatepark();
-                    skatepark.setSkateparkName(skateparkName);
-                    skatepark.setAuthor("Author"); // Set author and other details as needed
-                    skatepark.setTitle("Title");
-                    skatepark.setAddress("Address");
-                    skatepark.setStarRating(4); // Set the star rating as needed
-                    skatepark.setDescription("Description");
-                    skatepark.setTotalLikes(0); // Initialize likes to 0
+            List<Skatepark> skateparkList = Skatepark.init(); // Assuming you have a method that returns a List<Skatepark>
+            for (Skatepark skatepark : skateparkList) {
+                List<Skatepark> skateparkFound = skateparkRepo.findBySkateparkName(skatepark.getSkateparkName());
+                if (skateparkFound.isEmpty()) {
                     skateparkRepo.save(skatepark);
                 }
             }

@@ -3,6 +3,9 @@ package com.nighthawk.spring_portfolio.mvc.skatepark;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Data
@@ -97,14 +100,19 @@ public class Skatepark {
         this.totalLikes = totalLikes;
     }
 
-    public static String[] init() {
-        final String[] skateparkArray = {
-            "Skatepark 1",
-            "Skatepark 2",
-            "Skatepark 3",
-            "Skatepark 4",
-            "Skatepark 5",
-        };
-        return skateparkArray;
+    public static List<Skatepark> createInitialData() {
+        List<Skatepark> initialData = new ArrayList<>();
+
+        initialData.add(new Skatepark("Del Sur Skatepark", "Finn Carpenter", "Del Sur midpark", "15820 Paseo Montenero", 3.5, "I understand with compact space gives little room for opportunity. Although look at parks like Solona Beach skatepark, it's smaller than Del sur and accomplishes more in flows better.", 100));
+        // Add more skatepark instances as needed
+
+        return initialData;
     }
+
+    public static List<Skatepark> init() {
+        return createInitialData();
+    }
+
 }
+
+
