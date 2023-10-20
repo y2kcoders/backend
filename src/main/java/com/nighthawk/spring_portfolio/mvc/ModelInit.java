@@ -13,6 +13,9 @@ import com.nighthawk.spring_portfolio.mvc.note.NoteJpaRepository;
 import com.nighthawk.spring_portfolio.mvc.person.Person;
 import com.nighthawk.spring_portfolio.mvc.person.PersonDetailsService;
 
+import com.nighthawk.spring_portfolio.mvc.skatepark.Skatepark;
+import com.nighthawk.spring_portfolio.mvc.skatepark.SkateparkJPA;
+
 import java.util.List;
 
 @Component
@@ -21,6 +24,8 @@ public class ModelInit {
     @Autowired JokesJpaRepository jokesRepo;
     @Autowired NoteJpaRepository noteRepo;
     @Autowired PersonDetailsService personService;
+    @Autowired SkateparkJPA skateparkRepo; // Inject the SkateparkRepository
+
 
     @Bean
     CommandLineRunner run() {  // The run() method will be executed after the application starts
@@ -48,7 +53,13 @@ public class ModelInit {
                     noteRepo.save(n);  // JPA Save                  
                 }
             }
-
+            List<Skatepark> skateparkList = Skatepark.init(); // Assuming you have a method that returns a List<Skatepark>
+            for (Skatepark skatepark : skateparkList) {
+                List<Skatepark> skateparkFound = skateparkRepo.findBySkateparkName(skatepark.getSkateparkName());
+                if (skateparkFound.isEmpty()) {
+                    skateparkRepo.save(skatepark);
+                }
+            }
         };
     }
 }
