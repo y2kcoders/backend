@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.nighthawk.spring_portfolio.mvc.jokes.Jokes;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,12 +40,12 @@ public class ImageController {
 	ResourceLoader resourceLoader;
 	
 	@PostMapping
-    public ResponseEntity<String> save(MultipartFile image, @RequestParam("username") String username, @RequestParam("imageName") String imageName) throws IOException {
+    public ResponseEntity<String> save(MultipartFile image, @RequestParam("username") String username) throws IOException {
         
             Base64.Encoder encoder = Base64.getEncoder();
             byte[] bytearr = image.getBytes();
             String encodedString = encoder.encodeToString(bytearr);
-            UploadFile file = new UploadFile(username, imageName, encodedString);
+            UploadFile file = new UploadFile(username,  encodedString);
         
         uploadFileRepository.save(file);
         return new ResponseEntity<>("It is created successfully", HttpStatus.CREATED);

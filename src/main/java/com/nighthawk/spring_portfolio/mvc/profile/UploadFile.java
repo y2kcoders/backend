@@ -26,12 +26,9 @@ public class UploadFile {
 	@Column
 	private String username;
 	@Column
-	private String imageName;
-	@Column
 	private String ImageEncoder;
-	public UploadFile(String username, String imageName, String ImageEncoder) {
+	public UploadFile(String username, String ImageEncoder) {
         this.username = username;
-        this.imageName= imageName;
         this.ImageEncoder = ImageEncoder;
     }
 	
