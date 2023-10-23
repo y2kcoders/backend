@@ -2,7 +2,6 @@ package com.nighthawk.spring_portfolio.mvc.profile;
 
 import java.io.IOException;
 import java.util.Base64;
-import java.util.List;
 import java.util.Optional;
 
 import javax.xml.bind.DatatypeConverter;

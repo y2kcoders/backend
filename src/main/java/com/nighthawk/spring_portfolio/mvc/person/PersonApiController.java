@@ -7,10 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.List;
 import java.text.SimpleDateFormat;
-
 @RestController
-@RequestMapping("/api/person")
+@RequestMapping("/mvc/person")
 public class PersonApiController {
     //     @Autowired
     // private JwtTokenUtil jwtGen;
@@ -22,7 +22,6 @@ public class PersonApiController {
     // Autowired enables Control to connect POJO Object through JPA
     @Autowired
     private PersonJpaRepository repository;
-
     /*
     GET List of People
      */
@@ -30,12 +29,22 @@ public class PersonApiController {
     public ResponseEntity<List<Person>> getPeople() {
         return new ResponseEntity<>( repository.findAllByOrderByNameAsc(), HttpStatus.OK);
     }
+    @GetMapping("/username")
+    public ResponseEntity<List<String>> getPeopleUsername() {
+    List<Person> lists = repository.findAllByOrderByNameAsc();
+    List<String> new_list = new ArrayList<>();
 
+    for (int i = 0; i < lists.size(); i++) {
+        new_list.add(lists.get(i).getName());
+    }
+
+    return new ResponseEntity<>(new_list, HttpStatus.OK);
+}
     /*
     GET individual Person using ID
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Person> getPerson(@PathVariable long id) {
+    public ResponseEntity<Person> getPerson(@PathVariable Long id) {
         Optional<Person> optional = repository.findById(id);
         if (optional.isPresent()) {  // Good ID
             Person person = optional.get();  // value from findByID
