@@ -7,10 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.List;
 import java.text.SimpleDateFormat;
 @RestController
-@RequestMapping("/mvc/person")
+@RequestMapping("/api/person")
 public class PersonApiController {
     //     @Autowired
     // private JwtTokenUtil jwtGen;
@@ -72,19 +71,20 @@ public class PersonApiController {
     /*
     POST Aa record by Requesting Parameters from URI
      */
-    @PostMapping( "/post")
-    public ResponseEntity<Object> postPerson(@RequestParam("email") String email,
-                                             @RequestParam("password") String password,
-                                             @RequestParam("name") String name,
-                                             @RequestParam("dob") String dobString) {
+    @PostMapping("/post")
+    public ResponseEntity<Object> postPerson(@RequestParam("name") String name, @RequestParam("email") String email, @RequestParam("password") String password, @RequestParam("dob") String dobString) {
         Date dob;
         try {
             dob = new SimpleDateFormat("MM-dd-yyyy").parse(dobString);
         } catch (Exception e) {
             return new ResponseEntity<>(dobString +" error; try MM-dd-yyyy", HttpStatus.BAD_REQUEST);
         }
-        // A person object WITHOUT ID will create a new record with default roles as student
-        Person person = new Person(email, password, name, dob);
+        
+        Person person = new Person();
+        person.setEmail(email);
+        person.setPassword(password);
+        person.setName(name);
+        person.setDob(dob);
         repository.save(person);
         return new ResponseEntity<>(email +" is created successfully", HttpStatus.CREATED);
     }
