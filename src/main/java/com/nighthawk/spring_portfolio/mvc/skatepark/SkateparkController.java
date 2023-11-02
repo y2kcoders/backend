@@ -39,6 +39,20 @@ public class SkateparkController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @PostMapping("/dislike/{name}")  // Change the path variable to 'name'
+    public ResponseEntity<Skatepark> updated_Dislikes(@PathVariable String name) {
+        List<Skatepark> skateparks = repository.findBySkateparkName(name);
+        if (!skateparks.isEmpty()) {
+            Skatepark skatepark = skateparks.get(0); // Assuming you want to work with the first matching skatepark
+            int currentLikes = skatepark.getTotalLikes();
+            skatepark.setTotalLikes(currentLikes - 1); // decrease likes by 1
+            // You can also update the author who liked the skatepark
+            repository.save(skatepark);
+            return new ResponseEntity<>(skatepark, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 
 
 
