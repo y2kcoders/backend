@@ -39,9 +39,10 @@ public class PostController {
         // Get the title and content from the request body
         String title = post.getTitle();
         String content = post.getContent();
-
+        String writer = post.getWriter();
         // Create a new Post object
         Post newPost = new Post();
+        newPost.setWriter(writer);
         newPost.setTitle(title); // Set the title
         newPost.setContent(content);
         // Set other fields as needed
