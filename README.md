@@ -1,4 +1,15 @@
-y2kcoders
+# Backend for skatepark.co
+> 4 main features API's
+- IMG api
+- Skatepark api
+- Chatboard api
+- Profile api
+
+# Contributors
+- Finn Carpenter
+- Justin Nguyen
+- Matiula Danish
+- James Lee 
 
 
 # [Spring Portfolio Starter](https://nighthawkcodingsociety.com/projectsearch/details/Spring%20Portfolio%20Starter)

@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/skatepark")
@@ -25,19 +24,6 @@ public class SkateparkController {
         return new ResponseEntity<>(savedSkatepark, HttpStatus.CREATED);
     }
 
-    // @PostMapping("/like/{name}")
-    // public ResponseEntity<Skatepark> updateLikes(@PathVariable String name, @RequestBody int likeValue) {
-    //     List<Skatepark> skateparks = repository.findBySkateparkName(name);
-    //     if (!skateparks.isEmpty()) {
-    //         Skatepark skatepark = skateparks.get(0); // Assuming you want to work with the first matching skatepark
-    //         int currentLikes = skatepark.getTotalLikes();
-    //         skatepark.setTotalLikes(currentLikes + likeValue);
-    //         // You can also update the author who liked the skatepark
-    //         repository.save(skatepark);
-    //         return new ResponseEntity<>(skatepark, HttpStatus.OK);
-    //     }
-    //     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    // }
 
     @PostMapping("/like/{name}")  // Change the path variable to 'name'
     public ResponseEntity<Skatepark> updateLikes(@PathVariable String name) {
@@ -59,7 +45,7 @@ public class SkateparkController {
         if (!skateparks.isEmpty()) {
             Skatepark skatepark = skateparks.get(0); // Assuming you want to work with the first matching skatepark
             int currentLikes = skatepark.getTotalLikes();
-            skatepark.setTotalLikes(currentLikes - 1); // Increment likes by 1
+            skatepark.setTotalLikes(currentLikes - 1); // decrease likes by 1
             // You can also update the author who liked the skatepark
             repository.save(skatepark);
             return new ResponseEntity<>(skatepark, HttpStatus.OK);
@@ -67,6 +53,19 @@ public class SkateparkController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+        @PostMapping("/edit/{name}")  // Change the path variable to 'name'
+    public ResponseEntity<Skatepark> updatename(@PathVariable String name) {
+        List<Skatepark> skateparks = repository.findBySkateparkName(name);
+        if (!skateparks.isEmpty()) {
+            Skatepark skatepark = skateparks.get(0); // Assuming you want to work with the first matching skatepark
+            String userinput = "test";
+            skatepark.setDescription(userinput); // Increment likes by 1
+            // You can also update the author who liked the skatepark
+            repository.save(skatepark);
+            return new ResponseEntity<>(skatepark, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 
 
