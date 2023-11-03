@@ -40,13 +40,26 @@ public class ImageController {
 	
 	@PostMapping
     public ResponseEntity<String> save(MultipartFile image, @RequestParam("username") String username) throws IOException {
-        
+        Optional<UploadFile> existingFileOptional = uploadFileRepository.findByUsername(username);
+
+        if (existingFileOptional.isPresent()) {
+            UploadFile existingFile = existingFileOptional.get();
+
             Base64.Encoder encoder = Base64.getEncoder();
             byte[] bytearr = image.getBytes();
             String encodedString = encoder.encodeToString(bytearr);
-            UploadFile file = new UploadFile(username,  encodedString);
-        
+
+            existingFile.setImageEncoder(encodedString); // 기존 이미지를 새 이미지로 교체
+            uploadFileRepository.save(existingFile);
+        }
+        else {
+        Base64.Encoder encoder = Base64.getEncoder();
+        byte[] bytearr = image.getBytes();
+        String encodedString = encoder.encodeToString(bytearr);
+        UploadFile file = new UploadFile(username,  encodedString);
         uploadFileRepository.save(file);
+            
+        }
         return new ResponseEntity<>("It is created successfully", HttpStatus.CREATED);
     }
     @GetMapping("/{username}")
