@@ -49,7 +49,7 @@ public class ImageController {
             byte[] bytearr = image.getBytes();
             String encodedString = encoder.encodeToString(bytearr);
 
-            existingFile.setImageEncoder(encodedString); // 기존 이미지를 새 이미지로 교체
+            existingFile.setImageEncoder(encodedString);
             uploadFileRepository.save(existingFile);
         }
         else {
