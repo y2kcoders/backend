@@ -98,8 +98,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.addHeaderWriter	(new StaticHeadersWriter("Access-Control-Allow-MaxAge", "600"))
 				.addHeaderWriter(
 						new StaticHeadersWriter("Access-Control-Allow-Methods", "POST", "GET", "OPTIONS", "DELETE", "HEAD"))
-				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", //"https://theoh32.github.io",
-				"http://127.0.0.1:4100"))
 					.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", //"https://theoh32.github.io",
 				"https://y2kcoders.github.io"))
 				.and()
