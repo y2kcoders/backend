@@ -66,12 +66,9 @@ public class SkateparkController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-
-
-
-
-    @DeleteMapping("/delete/{name}")
+    
+    
+        @DeleteMapping("/delete/{name}")
     public ResponseEntity<Void> deleteSkatepark(@PathVariable String name) {
         List<Skatepark> skateparks = repository.findBySkateparkName(name);
         if (!skateparks.isEmpty()) {

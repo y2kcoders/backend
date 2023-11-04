@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Arrays.asList("https://y2kcoders.github.io","http://127.0.0.1:4100")); // Add other allowed origins if
 																						// needed
-		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
+		configuration.setAllowedMethods(Arrays.asList( "DELETE", "GET", "POST", "PUT"));
 		configuration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization", "x-csrf-token"));
 		configuration.setAllowCredentials(true); // Allow credentials
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
