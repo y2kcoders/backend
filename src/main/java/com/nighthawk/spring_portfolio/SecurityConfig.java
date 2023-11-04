@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("https://y2kcoders.github.io/")); // Add other allowed origins if
+		configuration.setAllowedOrigins(Arrays.asList("https://y2kcoders.github.io/","http://127.0.0.1:4100")); // Add other allowed origins if
 																						// needed
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
 		configuration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization", "x-csrf-token"));
@@ -95,11 +95,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-ExposedHeaders", "*", "Authorization"))
 				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Headers", "Content-Type",
 						"Authorization", "x-csrf-token"))
-				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-MaxAge", "600"))
+				.addHeaderWriter	(new StaticHeadersWriter("Access-Control-Allow-MaxAge", "600"))
 				.addHeaderWriter(
-						new StaticHeadersWriter("Access-Control-Allow-Methods", "POST", "GET", "OPTIONS", "HEAD"))
-				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", "https://theoh32.github.io",
-						"http://localhost:4100"))
+						new StaticHeadersWriter("Access-Control-Allow-Methods", "POST", "GET", "OPTIONS", "DELETE", "HEAD"))
+				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", //"https://theoh32.github.io",
+				"http://127.0.0.1:4100"))
 				.and()
 				.formLogin()
 				.loginPage("/login")
