@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("https://y2kcoders.github.io/","http://127.0.0.1:4100")); // Add other allowed origins if
+		configuration.setAllowedOrigins(Arrays.asList("https://y2kcoders.github.io","http://127.0.0.1:4100")); // Add other allowed origins if
 																						// needed
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
 		configuration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization", "x-csrf-token"));
@@ -100,6 +100,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						new StaticHeadersWriter("Access-Control-Allow-Methods", "POST", "GET", "OPTIONS", "DELETE", "HEAD"))
 				.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", //"https://theoh32.github.io",
 				"http://127.0.0.1:4100"))
+					.addHeaderWriter(new StaticHeadersWriter("Access-Control-Allow-Origin", //"https://theoh32.github.io",
+				"https://y2kcoders.github.io"))
 				.and()
 				.formLogin()
 				.loginPage("/login")
