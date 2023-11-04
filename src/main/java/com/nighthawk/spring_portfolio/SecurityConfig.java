@@ -86,6 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// Change "permitAll" to "authenticated" to enable authentication
 				.antMatchers("/mvc/person/update/**").permitAll()
 				.antMatchers("/api/person/**").permitAll()
+				.antMatchers("/api/skatepark/delete/**").permitAll()
 				.antMatchers("/api/network/**").permitAll()
 				.and()
 				// support cors
